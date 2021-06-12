@@ -1,0 +1,17 @@
+---
+# handlers file for xcat-install
+- name: Restart network interface
+  command: bash -c "ifdown {{ network.con_name }} && ifup {{ network.con_name }}"
+
+- name: restart firewall
+  service:
+    name: firewalld
+    state: restarted
+
+- name: restart xcat
+  service:
+    name: xcatd
+    state: restarted
+
+- name: source xcat
+  command: "source /etc/profile.d/xcat.sh"

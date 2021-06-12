@@ -1,0 +1,18 @@
+---
+# defaults file for xcat-install
+network:
+  ip: "10.10.10.10/24"
+  gateway: "10.10.10.1"
+  dns: "8.8.8.8"
+  ifname: "eth0"
+  con_name: "nat-network"
+
+hostname: "xcatmn.mydomain.com"
+
+xcat_core:
+  baseurl: "http://xcat.org/files/xcat/repos/yum/latest/xcat-core"
+  gpgkey: "http://xcat.org/files/xcat/repos/yum/latest/xcat-core/repodata/repomd.xml.key"
+
+xcat_dep:
+  baseurl: "http://xcat.org/files/xcat/repos/yum/latest/xcat-dep/rh8/x86_64/"
+  gpgkey: "http://xcat.org/files/xcat/repos/yum/latest/xcat-dep/rh8/x86_64/repodata/repomd.xml.key"

@@ -1,0 +1,75 @@
+---
+# tasks file for xcat-install
+- assert:
+    that:
+      - ansible_memtotal_mb >= 3072
+  
+- name: Disable SELinux
+  selinux:
+    state: disabled
+
+- name: Set a hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: set static ip
+  nmcli:
+    type: ethernet
+    conn_name: '{{ network.con_name }}'
+    ip4: '{{ network.ip }}'
+    gw4: '{{ network.gateway }}'
+    dns4: "{{ network.dns }}"
+    ifname: "{{ network.ifname }}"
+    state: present
+  notify: Restart network interface
+  
+- name: insert open ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop: "{{ ports }}"
+  notify: restart firewall
+  
+- name: add xact core repos
+  yum_repository:
+    name: xcat-core
+    description: xCAT 2 Core packages
+    baseurl: "{{ xcat_core.baseurl }}"
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: "{{ xcat_core.gpgkey }}"
+    state: present
+
+- name: add xact dep repo
+  yum_repository:
+    name: xcat-dep
+    description: xCAT 2 dep packages
+    baseurl: "{{ xcat_dep.baseurl }}"
+    gpgcheck: yes
+    enabled: yes
+    gpgkey: "{{ xcat_dep.gpgkey }}"
+    state: present
+
+- name: install xcat latest version
+  yum:
+    name: xCAT
+    state: latest
+  notify: 
+  - restart xcat
+  - source xcat
+
+- name: Force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers
+ 
+- name: add missing ldlinux.c32 file to tftp boot
+  copy:
+    src: ldlinux.c32
+    dest: /tftpboot/
+
+- name: xCAT Version
+  command: "lsxcatd -a"
+  register: xcat_version
+
+- debug:
+    msg: "{{ xcat_version.stdout }}" 

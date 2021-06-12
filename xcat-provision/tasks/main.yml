@@ -1,0 +1,66 @@
+---
+# tasks file for xcat-provision
+
+
+
+- name: create osimage
+  command: 
+    argv:
+      - copycds 
+      - -w
+      - "{{ item }}"
+  loop: "{{ osimages_paths }}"
+
+- name: define groups
+  command: 
+    argv:
+      - mkdef 
+      - -t 
+      - group
+      - -f
+      - "{{ item.name }}"
+  loop: "{{ Xcat_groups }}"
+
+
+- name: define node
+  command: 
+    argv:
+      - mkdef 
+      - -t 
+      - node
+      - -f
+      - "{{ item.name }}"
+      - ip={{ item.ip }}
+      - mac={{ item.mac }}
+      - arch={{ item.arch }}
+      - groups={{ item.groups }}
+      - netboot={{ item.netboot }}
+
+  loop: "{{ Xcat_nodes }}"
+
+- name: configure passwords
+  command:
+    argv:
+    - chtab 
+    - key=system 
+    - passwd.username={{ system_user.user }}
+    - passwd.password={{ system_user.passwd }}
+    
+- name: create osimages
+  include_tasks: set_osimage.yml
+  loop: "{{ Xcat_nodes }}"
+
+
+
+
+
+- name: sets up /etc/hosts from the xCAT hosts table
+  command: makehosts
+
+- name: setup named configuration
+  command: makedns -a
+  notify: restart named
+
+- name: update DHCP configuration files
+  command: makedhcp -a
+  notify: restart dhcpd

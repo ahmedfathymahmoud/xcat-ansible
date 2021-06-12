@@ -1,0 +1,12 @@
+---
+# handlers file for xcat-provision
+- name: restart named
+  service:
+    name: named
+    state: restarted
+
+- name: restart dhcpd
+  service:
+    name: dhcpd
+    state: restarted
+
