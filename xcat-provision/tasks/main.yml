@@ -38,6 +38,19 @@
 
   loop: "{{ Xcat_nodes }}"
 
+- name: postscript
+  command:
+    argv:
+    - chdef
+    - "{{ item.name }}"
+    - postscripts=syslog,remoteshell,syncfiles,{{ item.postscripts | default() }}
+  loop: "{{ Xcat_nodes }}"
+ 
+- name: copy postscripts to /install/postscripts
+  copy:
+    src: postscripts/
+    dest: /install/postscripts/
+
 - name: configure passwords
   command:
     argv:
@@ -52,7 +65,15 @@
 
 
 
-
+- name: edit site table
+  command:
+    argv:
+    - chdef
+    - -t
+    - site
+    - nameservers={{ ansible_default_ipv4.address }}
+    - forwarders={{ site.forwarders }}
+    - gateway={{ site.gateway }}
 
 - name: sets up /etc/hosts from the xCAT hosts table
   command: makehosts

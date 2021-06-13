@@ -23,6 +23,8 @@ Xcat_nodes:
     groups: "all"
     os: centos8
     mode: install
+    postscripts: testy
+
 
   - name: "cn2"
     ip: 10.10.10.40
@@ -31,15 +33,16 @@ Xcat_nodes:
     arch: "x86_64"
     groups: "all"
     os: centos8
-    mode: netboot
-
-
-
+    mode: install   
 
 
 osimages_paths: 
   - "/opt/CentOS-7-x86_64-Minimal-2003.iso"
   - "/opt/CentOS-8.2.2004-x86_64-minimal.iso"
+
+site:
+  forwarders: 8.8.8.8,8.8.4.4
+  gateway: 10.10.10.1
 
 
 
