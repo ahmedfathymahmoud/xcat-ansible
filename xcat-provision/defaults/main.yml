@@ -32,8 +32,10 @@ Xcat_nodes:
     netboot: "pxe"
     arch: "x86_64"
     groups: "all"
-    os: centos8
-    mode: install   
+    os: centos7
+    mode: install 
+    postscripts: testy
+  
 
 
 osimages_paths: 

@@ -7,14 +7,14 @@
     argv:
       - genimage
       - "{{ r.stdout }}"
-  when: item.mode == "netboot"
+  when: item.mode == "netboot" or item.mode == "statelite"
 
 - name:  Packing a stateless image
   command:
     argv:
       - packimage
       - "{{ r.stdout }}"
-  when: item.mode == "netboot"
+  when: item.mode == "netboot" or item.mode == "statelite"
 
 - name: set os and installation type
   command:
