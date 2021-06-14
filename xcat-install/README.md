@@ -21,7 +21,7 @@ Role Variables
 
 | Variable   | Comments  |
 | :---        | :---             |
-| `network` | network paramters (ip, dns, ifname, connection name, gateway)      | The internet hostname of this mail systems |
+| `network` | network paramters (ip, dns, ifname, connection name, gateway)      |
 | `hostname` |  hostname of mangement node |
 | `xcat_core`  |  xCAT’s main software package (baseurl, gpgkey) |
 | `xcat_dep`  | xCAT’s dependency package (baseurl, gpgkey) |

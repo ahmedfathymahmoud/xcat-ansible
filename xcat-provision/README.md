@@ -1,38 +1,30 @@
-Role Name
+xCAT Provision
 =========
 
-A brief description of the role goes here.
+Role that run on mangement node to define multiple compute nodes, groups and osimages 
+
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Supported operating systems:
 
+Redhat >= 7.0
+
+
+-------------------------------------------------------
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+### defaults
 
-Dependencies
-------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable   | Comments  |
+| :---        | :---             |
+| `Xcat_nodes` | compute node paramters (name, ip, mac, arch ,netboot method, os: os name,mode: intstallation mode, postscript name (located in files folder) | 
+|------------------------------|-----------------------------------|
+| `Xcat_groups` |  group defination (name, arch)|
+| `osimages_paths`  |  list of ISO images paths |
+| `site`  | site paramters (dns forwarders, gateway) |
+|`system_user`| the system user and password on the compute nodes (user,password)|
 
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
