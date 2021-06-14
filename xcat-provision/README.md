@@ -29,7 +29,7 @@ Role Variables
 
 Example Playbook
 ----------------
-
+```
   - hosts: mangement
     remote_user: root
     gather_facts: yes 
@@ -76,6 +76,6 @@ Example Playbook
         system_user:
           user: root
           passwd: $1$BJ1kwyBR$cCKQmlq1reH9u./loc4IK0
-
+```
 
 

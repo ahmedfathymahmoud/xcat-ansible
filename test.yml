@@ -3,6 +3,7 @@
   remote_user: root
   gather_facts: yes 
   roles:
+    - role: xcat-install
     - role: xcat-provision
       vars:
         Xcat_nodes:
