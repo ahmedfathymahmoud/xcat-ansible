@@ -1,25 +1,25 @@
 - name: select image
   shell: lsdef -t osimage | cut -d" "  -f1 | grep  -e "{{ item.os }}".*"{{ item.mode }}"
-  register: r
+  register: osimage_name
 
 - name:  Generates a stateless image to be used for a diskless install
   command:
     argv:
       - genimage
-      - "{{ r.stdout }}"
+      - "{{ osimage_name.stdout }}"
   when: item.mode == "netboot" or item.mode == "statelite"
 
 - name:  Packing a stateless image
   command:
     argv:
       - packimage
-      - "{{ r.stdout }}"
-  when: item.mode == "netboot" or item.mode == "statelite"
+      - "{{ osimage_name.stdout }}"
+  when: item.mode == "netboot"
 
 - name: set os and installation type
   command:
     argv:
       - nodeset
       - "{{ item.name }}"
-      - osimage={{ r.stdout }}
+      - osimage={{ osimage_name.stdout }}
 
