@@ -11,7 +11,7 @@
 #     groups: "all,group1"
 #     os: centos8
 #     mode: install
-#     postscripts: testy
+#     postscripts: script_name
 
 
 #   - name: "cn2"
