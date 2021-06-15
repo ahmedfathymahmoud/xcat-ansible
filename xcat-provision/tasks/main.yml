@@ -1,13 +1,5 @@
 ---
 # tasks file for xcat-provision
-- name: create osimage
-  command:
-    argv:
-      - copycds
-      - -w
-      - "{{ item }}"
-  loop: "{{ osimages_paths }}"
-
 - name: define groups
   command:
     argv:
@@ -55,10 +47,6 @@
       - passwd.username={{ system_user.user }}
       - passwd.password={{ system_user.passwd }}
 
-- name: create osimages
-  include_tasks: set_osimage.yml
-  loop: "{{ Xcat_nodes }}"
-
 - name: edit site table
   command:
     argv:
@@ -73,9 +61,33 @@
   command: makehosts
 
 - name: setup named configuration
-  command: makedns -a
+  command: makedns -n
   notify: restart named
 
 - name: update DHCP configuration files
-  command: makedhcp -a
+  command: makedhcp -n
   notify: restart dhcpd
+
+- name: Copy os ISOs to mangement node
+  copy:
+    src:  "{{ item }}"
+    dest: "{{ osimages_dest }}"
+  loop: "{{ osimages_paths }}"
+
+- name: create osimage
+  command:
+    argv:
+      - copycds
+      - -w
+      - "{{ item | basename  }}"
+    chdir: "{{ osimages_dest }}"
+  loop: "{{ osimages_paths }}"
+
+
+- name: create osimages
+  include_tasks: set_osimage.yml
+  loop: "{{ Xcat_nodes }}"
+
+
+
+

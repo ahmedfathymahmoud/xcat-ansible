@@ -10,7 +10,7 @@
           ip: "10.10.10.10/24"
           gateway: 10.10.10.1
           dns: "8.8.8.8,8.8.4.4"
-          ifname: "eth0"
+          ifname: enp0s3
           con_name: "nat-network"
 
         hostname: "xcatmn.mydomain.com"
@@ -20,11 +20,11 @@
         Xcat_nodes:
         - name: "cn1"
           ip: 10.10.10.20
-          mac: "08:00:27:03:15:9D"
+          mac: "08:00:27:5B:E8:00"
           netboot: "pxe"
           arch: "x86_64"
           groups: "all,group1"
-          os: centos8
+          os: centos7
           mode: install
           postscripts: install_cowsay
 
@@ -36,7 +36,7 @@
           arch: "x86_64"
           groups: "all,group2"
           os: centos8
-          mode: netboot 
+          mode: netboot
         
       Xcat_groups:
         - name: "group1"
@@ -48,7 +48,7 @@
       osimages_paths: 
         - "/opt/CentOS-7-x86_64-Minimal-2003.iso"
         - "/opt/CentOS-8.2.2004-x86_64-minimal.iso"
-
+      osimages_dest: /tmp/
       site:
         forwarders: 8.8.8.8,8.8.4.4
         gateway: 10.10.10.1

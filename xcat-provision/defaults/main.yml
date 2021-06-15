@@ -30,7 +30,7 @@
 #   - name: "group2"
 #     arch: "x86_64"
 
-# osimages_paths: 
+# osimages_iso_paths:
 #   - "/opt/CentOS-7-x86_64-Minimal-2003.iso"
 #   - "/opt/CentOS-8.2.2004-x86_64-minimal.iso"
 
@@ -43,3 +43,4 @@
 #   user: root
 #   passwd: $1$BJ1kwyBR$cCKQmlq1reH9u./loc4IK0
 
+# osimages_dest: /tmp/

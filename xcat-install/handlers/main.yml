@@ -14,4 +14,4 @@
     state: restarted
 
 - name: source xcat
-  command: "source /etc/profile.d/xcat.sh"
+  shell: "source /etc/profile.d/xcat.sh"
