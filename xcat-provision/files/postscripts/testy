@@ -1,4 +1,2 @@
 #!/bin/bash
-nmcli con mod "System enp0s3" ipv4.gateway 10.10.10.1 ipv4.address 10.10.10.20/24
-nmcli con up "System enp0s3"
-yum install -y python3 wget
+yum install -y cowsay

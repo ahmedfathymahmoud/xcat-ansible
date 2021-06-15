@@ -1,32 +1,28 @@
 ---
 # tasks file for xcat-provision
-
-
-
 - name: create osimage
-  command: 
+  command:
     argv:
-      - copycds 
+      - copycds
       - -w
       - "{{ item }}"
   loop: "{{ osimages_paths }}"
 
 - name: define groups
-  command: 
+  command:
     argv:
-      - mkdef 
-      - -t 
+      - mkdef
+      - -t
       - group
       - -f
       - "{{ item.name }}"
   loop: "{{ Xcat_groups }}"
 
-
 - name: define node
-  command: 
+  command:
     argv:
-      - mkdef 
-      - -t 
+      - mkdef
+      - -t
       - node
       - -f
       - "{{ item.name }}"
@@ -41,11 +37,11 @@
 - name: postscript
   command:
     argv:
-    - chdef
-    - "{{ item.name }}"
-    - postscripts=syslog,remoteshell,syncfiles,{{ item.postscripts | default() }}
+      - chdef
+      - "{{ item.name }}"
+      - postscripts=syslog,remoteshell,syncfiles,{{ item.postscripts | default() }}
   loop: "{{ Xcat_nodes }}"
- 
+
 - name: copy postscripts to /install/postscripts
   copy:
     src: postscripts/
@@ -54,26 +50,24 @@
 - name: configure passwords
   command:
     argv:
-    - chtab 
-    - key=system 
-    - passwd.username={{ system_user.user }}
-    - passwd.password={{ system_user.passwd }}
-    
+      - chtab
+      - key=system
+      - passwd.username={{ system_user.user }}
+      - passwd.password={{ system_user.passwd }}
+
 - name: create osimages
   include_tasks: set_osimage.yml
   loop: "{{ Xcat_nodes }}"
 
-
-
 - name: edit site table
   command:
     argv:
-    - chdef
-    - -t
-    - site
-    - nameservers={{ ansible_default_ipv4.address }}
-    - forwarders={{ site.forwarders }}
-    - gateway={{ site.gateway }}
+      - chdef
+      - -t
+      - site
+      - nameservers={{ ansible_default_ipv4.address }}
+      - forwarders={{ site.forwarders }}
+      - gateway={{ site.gateway }}
 
 - name: sets up /etc/hosts from the xCAT hosts table
   command: makehosts

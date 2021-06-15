@@ -1,6 +1,7 @@
 ---
 # defaults file for xcat-provision
 
+
 # Xcat_nodes:
 #   - name: "cn1"
 #     ip: 10.10.10.20

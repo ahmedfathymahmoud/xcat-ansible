@@ -1,9 +1,20 @@
 ---
-- hosts: localhost
+- hosts: mangement
   remote_user: root
+  become: yes
   gather_facts: yes 
   roles:
     - role: xcat-install
+      vars:
+        network:
+          ip: "10.10.10.10/24"
+          gateway: 10.10.10.1
+          dns: "8.8.8.8,8.8.4.4"
+          ifname: "eth0"
+          con_name: "nat-network"
+
+        hostname: "xcatmn.mydomain.com"
+
     - role: xcat-provision
       vars:
         Xcat_nodes:
@@ -15,7 +26,7 @@
           groups: "all,group1"
           os: centos8
           mode: install
-          postscripts: testy
+          postscripts: install_cowsay
 
 
         - name: "cn2"
@@ -24,7 +35,7 @@
           netboot: "pxe"
           arch: "x86_64"
           groups: "all,group2"
-          os: centos7
+          os: centos8
           mode: netboot 
         
       Xcat_groups:
