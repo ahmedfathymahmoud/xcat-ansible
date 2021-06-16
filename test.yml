@@ -1,43 +1,42 @@
 ---
 - hosts: mangement
   remote_user: root
-  become: yes
-  gather_facts: yes 
+  become: true
+  gather_facts: true
   roles:
-    - role: xcat-install
-      vars:
-        network:
-          ip: "10.10.10.10/24"
-          gateway: 10.10.10.1
-          dns: "8.8.8.8,8.8.4.4"
-          ifname: enp0s3
-          con_name: "nat-network"
+    # - role: xcat-install
+    #   vars:
+    #     network:
+    #       ip: "10.10.10.10/24"
+    #       gateway: 10.10.10.1
+    #       dns: "8.8.8.8,8.8.4.4"
+    #       ifname: enp0s3
+    #       con_name: "nat-network"
 
-        hostname: "xcatmn.mydomain.com"
+    #     hostname: "xcatmn.mydomain.com"
 
     - role: xcat-provision
       vars:
         Xcat_nodes:
-        - name: "cn1"
-          ip: 10.10.10.20
-          mac: "08:00:27:5B:E8:00"
-          netboot: "pxe"
-          arch: "x86_64"
-          groups: "all,group1"
-          os: centos7
-          mode: install
-          postscripts: install_cowsay
+          - name: "cn1"
+            ip: 10.10.10.20
+            mac: "08:00:27:5B:E8:00"
+            netboot: "pxe"
+            arch: "x86_64"
+            groups: "all,group1"
+            os: centos8
+            mode: install
+            postscripts: install_cowsay
 
 
-        - name: "cn2"
-          ip: 10.10.10.40
-          mac: "08:00:27:1C:05:40"
-          netboot: "pxe"
-          arch: "x86_64"
-          groups: "all,group2"
-          os: centos8
-          mode: netboot
-        
+          - name: "cn2"
+            ip: 10.10.10.40
+            mac: "08:00:27:1C:05:40"
+            netboot: "pxe"
+            arch: "x86_64"
+            groups: "all,group2"
+            os: centos8
+            mode: install
       Xcat_groups:
         - name: "group1"
           arch: "x86_64"
@@ -45,7 +44,7 @@
         - name: "group2"
           arch: "x86_64"
 
-      osimages_paths: 
+      osimages_paths:
         - "/opt/CentOS-7-x86_64-Minimal-2003.iso"
         - "/opt/CentOS-8.2.2004-x86_64-minimal.iso"
       osimages_dest: /tmp/
@@ -57,4 +56,3 @@
       system_user:
         user: root
         passwd: $1$BJ1kwyBR$cCKQmlq1reH9u./loc4IK0
-

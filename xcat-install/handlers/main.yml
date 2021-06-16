@@ -1,7 +1,7 @@
 ---
 # handlers file for xcat-install
 - name: Restart network interface
-  command: bash -c "ifdown {{ network.con_name }} && ifup {{ network.con_name }}"
+  command: bash -c "nmcli con down {{ network.con_name }} && nmcli con up {{ network.con_name }}"
 
 - name: restart firewall
   service:
